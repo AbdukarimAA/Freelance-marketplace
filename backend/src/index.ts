@@ -1,4 +1,4 @@
-import express from "express";
+import express, {NextFunction, Request, Response} from "express";
 import * as mongoose from "mongoose";
 import * as dotenv from 'dotenv';
 import path from "path";
@@ -39,13 +39,25 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-app.use('/api/users', userRoute)
-app.use('/api/auth', authRoute)
-app.use('/api/conversations', conversationRoute)
-app.use('/api/messages', messageRoute)
-app.use('/api/gigs', gigRoute)
-app.use('/api/reviews', reviewRoute)
-app.use('/api/orders', orderRoute)
+app.use('/api/users', userRoute);
+app.use('/api/auth', authRoute);
+app.use('/api/conversations', conversationRoute);
+app.use('/api/messages', messageRoute);
+app.use('/api/gigs', gigRoute);
+app.use('/api/reviews', reviewRoute);
+app.use('/api/orders', orderRoute);
+
+
+interface Error {
+    status?: number;
+    message?: string;
+}
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    const errorStatus = err.status || 500;
+    const errorMessage = err.message || "Something went wrong";
+
+    return res.status(errorStatus).send(errorMessage);
+});
 
 app.listen(5000, () => {
     connect();

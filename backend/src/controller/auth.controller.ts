@@ -1,9 +1,10 @@
-import express, {Request, Response} from "express";
+import express, {Request, Response, NextFunction} from "express";
 import User, {IUser} from '../models/user.model.js';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import {createError} from "../utils/hadleError.js";
 
-export const register = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const hash = bcrypt.hashSync(req.body.password, 7);
         const newUser: IUser = new User({
@@ -13,17 +14,17 @@ export const register = async (req: Request, res: Response) => {
         await newUser.save();
         res.status(201).send("User has been created");
     } catch (error: any) {
-        res.status(500).send('Something went wrong');
+        next(error);
     }
 }
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await User.findOne({username: req.body.username});
-        if(!user) return res.status(404).send("User not found")
+        if(!user) return next(createError(404, "User not found"));
 
         const isCorrect = bcrypt.compareSync(req.body.password, user.password);
-        if(!isCorrect) return res.status(400).send("Wrong password or username");
+        if(!isCorrect) return next(createError(404, "Wrong password or username"));
 
         const token = jwt.sign({
             id: user._id,
@@ -36,13 +37,16 @@ export const login = async (req: Request, res: Response) => {
         }).status(200).send(info);
 
     } catch (error: any) {
-        res.status(500).send('Something went wrong');
+        next(error);
     }
 }
 
 export const logout = async (req: Request, res: Response) => {
     try {
-
+        res.clearCookie("accessToken", {
+            sameSite: "none",
+            secure: true
+        }).status(200).send("User has been logged out")
     } catch (error: any) {
         res.status(500).send('Something went wrong');
     }

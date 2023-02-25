@@ -1,23 +1,19 @@
-import {Request, Response} from "express";
+import {NextFunction, Request, Response} from "express";
 import User, {IUser} from '../models/user.model.js';
-import jwt from "jsonwebtoken";
+import {IUserId} from "../middleware/jwt.js";
+import {createError} from "../utils/hadleError.js";
 
-//1
-export const deleteUser = async (req: Request, res: Response) => {
+export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await User.findById(req.params.id);
-        const token = req.cookies.accessToken;
-        if(!token) return res.status(401).send("You are not authenticated")
 
-        jwt.verify(token, process.env.JWT_KEY as string, async (err: any, payload: any) => {
-            if(payload.id !== user!._id.toString()) {
-                return res.status(401).send("You can delete only your account")
-            }
-            await User.findByIdAndDelete(req.params.id)
-            res.status(200).send("User Deleted")
-        });
+        if((req as IUserId).userId !== user!._id.toString()) {
+            return next(createError(403, "You can delete only your account"));
+        }
+        await User.findByIdAndDelete(req.params.id)
+        res.status(200).send("User Deleted");
 
     } catch (error: any) {
-        res.status(500).send('Something went wrong');
+        next(error);
     }
 }
