@@ -1,15 +1,5 @@
 import mongoose, { Schema, model, connect } from 'mongoose';
 
-interface IUser {
-    username: string;
-    email: string;
-    password: string;
-    img: string;
-    country: string;
-    phone: string;
-    desc: string;
-    isSeller: boolean;
-}
 
 const userSchema = new Schema<IUser>({
     username: {
@@ -49,5 +39,17 @@ const userSchema = new Schema<IUser>({
 },{
     timestamps:true
 });
+
+export interface IUser extends mongoose.Document{
+    username: string;
+    email: string;
+    password: string;
+    img: string;
+    country: string;
+    phone: string;
+    desc: string;
+    isSeller: boolean;
+    _doc?: any
+}
 
 export default mongoose.model("User", userSchema);
