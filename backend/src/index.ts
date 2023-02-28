@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 import path from "path";
 import {fileURLToPath} from "url";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import userRoute from "./routes/user.route.js";
 import authRoute from "./routes/auth.route.js";
@@ -17,6 +18,7 @@ const __filename: string = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+app.use(cors({origin: 'http://127.0.0.1:5173', credentials: true})); //credentials for cookies
 dotenv.config({ path: __dirname+'/.env' });
 
 mongoose.set("strictQuery", true);
@@ -35,6 +37,7 @@ const connect = async () => {
         console.log(error)
     }
 }
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -59,7 +62,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     return res.status(errorStatus).send(errorMessage);
 });
 
-app.listen(5000, () => {
+app.listen(8000, () => {
     connect();
     console.log('server is started');
 })
