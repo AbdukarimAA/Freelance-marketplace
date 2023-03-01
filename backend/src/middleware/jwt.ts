@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 import {createError} from "../utils/hadleError.js";
 
 export interface IUserId extends Request {
-    userId: string;
-    isSeller: boolean;
+    userId?: string;
+    isSeller?: boolean;
 }
 
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
