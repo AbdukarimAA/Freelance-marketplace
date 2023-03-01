@@ -4,6 +4,7 @@ import { Slider } from "infinite-react-carousel/lib";
 import {useQuery} from "@tanstack/react-query";
 import newRequest from "../../utils/axiosRequest";
 import {useParams} from "react-router-dom";
+import Reviews from "../../components/reviews/Reviews";
 
 function Gig() {
 
@@ -21,7 +22,8 @@ function Gig() {
     const { isLoading: isLoadingUser, error: errorUser, data: dataUser } = useQuery({
         queryKey: ['userData'],
         queryFn: () => newRequest.get(`/users/${userId}`)
-            .then((res) => {return res.data})
+            .then((res) => {return res.data}),
+            enabled: !!userId,
     });
 
     console.log(dataUser)
@@ -121,134 +123,7 @@ function Gig() {
                                 </div>
                             </div>
                         )}
-                    <div className="reviews">
-                        <h2>Reviews</h2>
-                        <div className="item">
-                            <div className="user">
-                                <img
-                                    className="pp"
-                                    src="https://static.tildacdn.com/tild3930-3330-4463-b038-333634313535/_.jpg"
-                                    alt=""
-                                />
-                                <div className="info">
-                                    <span>Garner David</span>
-                                    <div className="country">
-                                        <img
-                                            src="https://static.tildacdn.com/tild3930-3330-4463-b038-333634313535/_.jpg"
-                                            alt=""
-                                        />
-                                        <span>United States</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="stars">
-                                <img src="/img/star.png" alt=""/>
-                                <img src="/img/star.png" alt=""/>
-                                <img src="/img/star.png" alt=""/>
-                                <img src="/img/star.png" alt=""/>
-                                <img src="/img/star.png" alt=""/>
-                                <span>5</span>
-                            </div>
-                            <p>
-                                I just want to say that art_with_ai was the first, and after
-                                this, the only artist Ill be using on Fiverr. Communication was
-                                amazing, each and every day he sent me images that I was free to
-                                request changes to. They listened, understood, and delivered
-                                above and beyond my expectations. I absolutely recommend this
-                                gig, and know already that Ill be using it again very very soon
-                            </p>
-                            <div className="helpful">
-                                <span>Helpful?</span>
-                                <img src="/img/like.png" alt=""/>
-                                <span>Yes</span>
-                                <img src="/img/dislike.png" alt=""/>
-                                <span>No</span>
-                            </div>
-                        </div>
-                        <hr/>
-                        <div className="item">
-                            <div className="user">
-                                <img
-                                    className="pp"
-                                    src="https://static.tildacdn.com/tild3930-3330-4463-b038-333634313535/_.jpg"
-                                    alt=""
-                                />
-                                <div className="info">
-                                    <span>Sidney Owen</span>
-                                    <div className="country">
-                                        <img
-                                            src="https://static.tildacdn.com/tild3930-3330-4463-b038-333634313535/_.jpg"
-                                            alt=""
-                                        />
-                                        <span>Germany</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="stars">
-                                <img src="/img/star.png" alt=""/>
-                                <img src="/img/star.png" alt=""/>
-                                <img src="/img/star.png" alt=""/>
-                                <img src="/img/star.png" alt=""/>
-                                <img src="/img/star.png" alt=""/>
-                                <span>5</span>
-                            </div>
-                            <p>
-                                The designer took my photo for my book cover to the next level!
-                                Professionalism and ease of working with designer along with
-                                punctuality is above industry standards!! Whatever your project
-                                is, you need this designer!
-                            </p>
-                            <div className="helpful">
-                                <span>Helpful?</span>
-                                <img src="/img/like.png" alt=""/>
-                                <span>Yes</span>
-                                <img src="/img/dislike.png" alt=""/>
-                                <span>No</span>
-                            </div>
-                        </div>
-                        <hr/>
-                        <div className="item">
-                            <div className="user">
-                                <img
-                                    className="pp"
-                                    src="https://static.tildacdn.com/tild3930-3330-4463-b038-333634313535/_.jpg"
-                                    alt=""
-                                />
-                                <div className="info">
-                                    <span>Lyle Giles </span>
-                                    <div className="country">
-                                        <img
-                                            src="https://static.tildacdn.com/tild3930-3330-4463-b038-333634313535/_.jpg"
-                                            alt=""
-                                        />
-                                        <span>United States</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="stars">
-                                <img src="/img/star.png" alt=""/>
-                                <img src="/img/star.png" alt=""/>
-                                <img src="/img/star.png" alt=""/>
-                                <img src="/img/star.png" alt=""/>
-                                <img src="/img/star.png" alt=""/>
-                                <span>5</span>
-                            </div>
-                            <p>
-                                Amazing work! Communication was
-                                amazing, each and every day he sent me images that I was free to
-                                request changes to. They listened, understood, and delivered
-                                above and beyond my expectations. I absolutely recommend this
-                                gig, and know already that Ill be using it again very very soon
-                            </p>
-                            <div className="helpful">
-                                <span>Helpful?</span>
-                                <img src="/img/like.png" alt=""/>
-                                <span>Yes</span>
-                                <img src="/img/dislike.png" alt=""/>
-                                <span>No</span>
-                            </div>
-                        </div>
-                    </div>
+                    <Reviews gigId={id}/>
                 </div>
                 <div className="right">
                     <div className="price">
