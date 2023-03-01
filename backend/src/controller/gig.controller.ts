@@ -39,19 +39,37 @@ export const deleteGig = async (req: Request, res: Response, next: NextFunction)
 
 export const getGig = async (req: Request, res: Response, next: NextFunction) => {
     try {
-
+        const gig = await Gig.findById(req.params.id);
+        if (!gig) return next(createError(404, 'Gig not found'));
+        res.status(200).send(gig);
     } catch (error: any) {
         next(error);
     }
-}
+};
 
 export const getGigs = async (req: Request, res: Response, next: NextFunction) => {
-    try {
+    const gigQuery = req.query;
 
+    const gigFilters = {
+        ...(gigQuery.userId && {userId: gigQuery.userId}), //regex string problem solving
+        ...(gigQuery.cat && {cat: gigQuery.cat}), //regex string problem solving
+        ...((gigQuery.min || gigQuery.max) &&
+            {price: {
+                ...(gigQuery.min && {$gt: gigQuery.min}),
+                ...(gigQuery.max && {$lt: gigQuery.max})
+            }}), //greater than ...
+        ...(gigQuery.search && { title: { $regex: gigQuery.search, $options: "i" }}), //$options: "i" for the upper and lower cases
+    };
+
+    try {
+        const gigs = await Gig.find(gigFilters);
+        if (!gigs) return next(createError(404, 'Gigs not found'));
+
+        res.status(200).send(gigs);
     } catch (error: any) {
         next(error);
     }
-}
+};
 
 /*
 * export const createGig = async (req: Request, res: Response, next: NextFunction) => {
