@@ -55,27 +55,30 @@ const Navbar = () => {
                     <span>Business</span>
                     <span>Explore</span>
                     <span>English</span>
-                    <span>Sign In</span>
                     {!currentUser?.isSeller && <span>Become a Seller</span>}
-                    {!currentUser && <button>Join</button>}
-                    {currentUser && (
-                        <div className='user' onClick={() => setOpen(!open)}>
-                            <img src={currentUser.img || '/img/rango.png'} alt=""/>
+                    {currentUser ? (
+                        <div className="user" onClick={() => setOpen(!open)}>
+                            <img src={currentUser.img || "/img/rango.png"} alt="" />
                             <span>{currentUser?.username}</span>
-                            {open && <div className="options">
-                                {
-                                    currentUser?.isSeller && (
+                            {open && (
+                                <div className="options">
+                                    {currentUser.isSeller && (
                                         <>
-                                            <Link className='link' to="/myGigs">Gigs</Link>
-                                            <Link className='link' to="/add">Add New Gig</Link>
+                                            <Link className="link" to="/myGigs">Gigs</Link>
+                                            <Link className="link" to="/add">Add New Gig</Link>
                                         </>
-                                    )
-                                }
-                                <Link className='link' to="/orders">Orders</Link>
-                                <Link className='link' to="/messages">Messages</Link>
-                                <Link className='link' to='' onClick={handleLogout}>LogOut</Link>
-                            </div>}
+                                    )}
+                                    <Link className="link" to="/orders">Orders</Link>
+                                    <Link className="link" to="/messages">Messages</Link>
+                                    <Link className="link" onClick={handleLogout} to=''>Logout</Link>
+                                </div>
+                            )}
                         </div>
+                    ) : (
+                        <>
+                            <Link to="/login" className="link">Sign in</Link>
+                            <Link className="link" to="/register"><button>Join</button></Link>
+                        </>
                     )}
                 </div>
             </div>

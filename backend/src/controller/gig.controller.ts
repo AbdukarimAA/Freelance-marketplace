@@ -62,7 +62,7 @@ export const getGigs = async (req: Request, res: Response, next: NextFunction) =
     };
 
     try {
-        const gigs = await Gig.find(gigFilters);
+        const gigs = await Gig.find(gigFilters).sort({[gigQuery.sort as any]: -1}); //to show the filtered ones
         if (!gigs) return next(createError(404, 'Gigs not found'));
 
         res.status(200).send(gigs);
