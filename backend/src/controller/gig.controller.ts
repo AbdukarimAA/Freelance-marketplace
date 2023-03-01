@@ -2,7 +2,7 @@ import express, {Request, Response, NextFunction} from "express";
 import {createError} from "../utils/hadleError.js";
 import {IUserId} from "../middleware/jwt.js";
 import Gig from '../models/gig.model.js';
-// 1 41 51
+
 export const createGig = async (req: Request, res: Response, next: NextFunction) => {
     if (!(req as IUserId).isSeller) return next(createError(403, 'Only sellers can create a gig'));
 
@@ -23,7 +23,15 @@ export const createGig = async (req: Request, res: Response, next: NextFunction)
 
 export const deleteGig = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        const gig = await Gig.findById(req.params.id);
+        console.log(gig)
 
+        if (gig.userId !== (req as IUserId).userId) {
+            return next(createError(403, 'You can only delete your own gig'));
+        }
+
+        await Gig.findByIdAndDelete(req.params.id);
+        res.status(200).send('Gig has been deleted');
     } catch (error: any) {
         next(error);
     }

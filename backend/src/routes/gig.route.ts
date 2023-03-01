@@ -4,8 +4,8 @@ import {createGig, deleteGig, getGig, getGigs} from "../controller/gig.controlle
 const router = express.Router();
 
 router.post('/', verifyToken, createGig)
-router.post('/:id', verifyToken, deleteGig)
-router.post('/single/:id', verifyToken, getGig)
-router.post('/', verifyToken, getGigs)
+router.delete('/:id', verifyToken, deleteGig)
+router.get('/single/:id', verifyToken, getGig)
+router.get('/', verifyToken, getGigs)
 
 export default router;
