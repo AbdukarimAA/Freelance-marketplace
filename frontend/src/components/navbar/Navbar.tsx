@@ -23,7 +23,6 @@ const Navbar = () => {
     }, []);
 
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || null);
-    console.log(typeof currentUser);
 
     // const currentUser = localStorage.getItem('currentUser'); //JSON.parse(localStorage.getItem('currentUser'));
     // if(typeof currentUser === 'string') {

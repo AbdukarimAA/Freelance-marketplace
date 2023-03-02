@@ -17,7 +17,6 @@ function Gig() {
     });
 
     const userId = data?.userId;
-    console.log(userId)
 
     const { isLoading: isLoadingUser, error: errorUser, data: dataUser } = useQuery({
         queryKey: ['userData'],
@@ -25,8 +24,6 @@ function Gig() {
             .then((res) => {return res.data}),
             enabled: !!userId,
     });
-
-    console.log(dataUser)
 
     return (
         <div className="gig">

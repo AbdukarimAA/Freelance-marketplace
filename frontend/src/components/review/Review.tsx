@@ -18,9 +18,8 @@ const Review = ({review}) => {
                 <div className="user">
                     <img
                         className="pp"
-                        src={data.img || '../../../public/img/rango.png'}
+                        src={data.img || '/img/star.png'}
                         alt=""
-                        key={data.img}
                     />
                     <div className="info">
                         <span>{data.username}</span>

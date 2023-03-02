@@ -40,7 +40,7 @@ export const deleteReview = async (req: Request, res: Response, next: NextFuncti
 
 export const getReviews = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const reviews = await Review.find({gigId: req.params.id});
+        const reviews = await Review.find({gigId: req.params.gigId});
         if(!reviews) return next(createError(401, 'There are no reviews'));
         res.status(200).send(reviews);
     } catch (error: any) {
