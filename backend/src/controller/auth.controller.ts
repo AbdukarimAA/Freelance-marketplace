@@ -34,10 +34,10 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         const {password, ...info} = user._doc;
 
         res.cookie("accessToken", token, {
-            maxAge: 10000000,
+            maxAge: 2592000,
             httpOnly: true,
             secure: true,
-            sameSite: "none"
+            // sameSite: "none"
         }).status(200).send(info);
 
     } catch (error: any) {
