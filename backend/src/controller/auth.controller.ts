@@ -32,6 +32,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         }, process.env.JWT_KEY as string);
 
         const {password, ...info} = user._doc;
+
         res.cookie("accessToken", token, {
             maxAge: 10000000,
             httpOnly: true,
@@ -47,7 +48,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 export const logout = async (req: Request, res: Response) => {
     try {
         res.clearCookie("accessToken", {
-            sameSite: "none",
+           sameSite: "none",
             secure: true
         }).status(200).send("User has been logged out")
     } catch (error: any) {

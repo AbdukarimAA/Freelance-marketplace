@@ -33,7 +33,7 @@ function Gig() {
                     <span className="breadcrumbs">Liverr {">"} Graphics & Design {">"}</span>
                     <h1>{data.title}</h1>
                         {
-                            isLoadingUser ? 'loading' : errorUser ? 'Something went wrong' : (
+                            isLoadingUser ? ("loading") : errorUser ? ("Something went wrong!"): (
                             <div className="user">
                                 <img
                                     className="pp"

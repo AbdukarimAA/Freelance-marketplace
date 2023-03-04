@@ -42,7 +42,7 @@ const Orders = () => {
                                         <td>{order.title}</td>
                                         <td>{order.price}</td>
                                         <td>
-                                            <img className="message" src="/img/twitter.png" alt=""/>
+                                            <img className="message" src="/img/message.png" alt=""/>
                                         </td>
                                     </tr>
                                 ))

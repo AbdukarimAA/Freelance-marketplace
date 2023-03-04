@@ -36,4 +36,5 @@ export const getOrders = async (req: Request, res: Response, next: NextFunction)
     } catch (err) {
         next(err);
     }
-}
+};
+

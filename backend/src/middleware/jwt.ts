@@ -1,13 +1,14 @@
 import {Request, Response, NextFunction} from "express";
 import jwt from "jsonwebtoken";
 import {createError} from "../utils/hadleError.js";
-
+//2 55 15
 export interface IUserId extends Request {
     userId?: string;
     isSeller?: boolean;
 }
 
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+
     const token = req.cookies.accessToken;
     if(!token) return next(createError(401, "You are not authenticated"));
 
