@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import newRequest from '../../utils/axiosRequest';
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import moment from "moment";
@@ -22,7 +22,7 @@ const Messages = () => {
         onSuccess:()=>{
             queryClient.invalidateQueries(["conversations"])
         }
-    })
+    });
 
     const handleRead = (id: string) => {
         mutation.mutate(id);

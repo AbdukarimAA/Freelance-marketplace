@@ -4,11 +4,6 @@ interface IMessage {
     conversationId: string;
     userId: string;
     desc: string;
-    price: number;
-    sellerId: string;
-    buyerId: string;
-    isCompleted: boolean;
-    payment_intent: string;
 }
 
 const messageSchema = new Schema<IMessage>({
