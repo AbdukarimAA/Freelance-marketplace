@@ -12,9 +12,8 @@ const Login = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
-            const res = await newRequest.post('auth/login', {username, password});
+            const res = await newRequest.post('/auth/login', {username, password});
             localStorage.setItem('currentUser', JSON.stringify(res.data));
-            console.log(res.data);
             navigate('/')
         } catch (e: any) {
             setError(e.response.data);
@@ -23,7 +22,7 @@ const Login = () => {
 
     return (
         <div className='login'>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} method='post'>
                 <h1>Sign in</h1>
                 <label htmlFor="">Username</label>
                 <input type="text" name='username' placeholder='johndoe' onChange={e => setUsername(e.target.value)}/>

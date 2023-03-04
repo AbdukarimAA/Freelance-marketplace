@@ -22,7 +22,7 @@ const Navbar = () => {
         }
     }, []);
 
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || null);
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
     // const currentUser = localStorage.getItem('currentUser'); //JSON.parse(localStorage.getItem('currentUser'));
     // if(typeof currentUser === 'string') {

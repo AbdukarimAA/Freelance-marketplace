@@ -14,13 +14,10 @@ import orderRoute from "./routes/order.route.js";
 import reviewRoute from "./routes/review.route.js";
 import messageRoute from "./routes/message.route.js";
 
+const app = express();
 const __filename: string = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-const app = express();
-app.use(cors({origin: 'http://127.0.0.1:5173', credentials: true})); //credentials for cookies
 dotenv.config({ path: __dirname+'/.env' });
-
 mongoose.set("strictQuery", true);
 
 function handleError(e: any) {
@@ -30,25 +27,23 @@ function handleError(e: any) {
 const connect = async () => {
     try {
         await mongoose.connect(process.env.MONGO as string);
-        console.log(process.env.MONGO);
         console.log("connected to mongoDB")
     } catch (error) {
         handleError(error);
-        console.log(error)
     }
 }
 
+app.use(cors({origin: 'http://127.0.0.1:5173', credentials: true})); //credentials for cookies
 app.use(express.json());
 app.use(cookieParser());
 
-
 app.use('/api/users', userRoute);
 app.use('/api/auth', authRoute);
+app.use('/api/gigs', gigRoute);
+app.use('/api/orders', orderRoute);
 app.use('/api/conversations', conversationRoute);
 app.use('/api/messages', messageRoute);
-app.use('/api/gigs', gigRoute);
 app.use('/api/reviews', reviewRoute);
-app.use('/api/orders', orderRoute);
 
 
 interface Error {
