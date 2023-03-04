@@ -24,7 +24,8 @@ export const getConversations = async (req: Request, res: Response, next: NextFu
     try {
         const conversation = await ConversationModel.find(
             (req as IUserId).isSeller ? {sellerId: (req as IUserId).userId} : {buyerId: (req as IUserId).userId}
-        )
+        ).sort({updatedAt: -1});
+
         if(!conversation) return next(createError(403, 'There are no conversations'));
         res.status(200).send(conversation);
     } catch (error: any) {
@@ -35,7 +36,7 @@ export const getConversations = async (req: Request, res: Response, next: NextFu
 export const getSingleConversation = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const conversation = await ConversationModel.findOne({id: req.params.id});
-        if(!conversation) return next(createError(403, 'There is no conversation'));
+        if(!conversation) return next(createError(404, 'There is no conversation Found'));
         res.status(200).send(conversation);
     } catch (error: any) {
         next(error);

@@ -34,7 +34,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         const {password, ...info} = user._doc;
 
         res.cookie("accessToken", token, {
-            maxAge: 2592000,
+            maxAge: 12592000,
             httpOnly: true,
             secure: true,
             // sameSite: "none"
