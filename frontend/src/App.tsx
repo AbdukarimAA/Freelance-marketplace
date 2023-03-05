@@ -13,6 +13,8 @@ import Message from "./pages/message/Message";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import './index.scss';
+import SuccessPay from "./pages/successPay/SuccessPay";
+import Payment from "./pages/payment/Payment";
 
 function App() {
     const queryClient = new QueryClient()
@@ -74,6 +76,14 @@ function App() {
                     path: '/message/:id',
                     element: <Message />
                 },
+                {
+                    path: '/success',
+                    element: <SuccessPay />
+                },
+                {
+                    path: '/pay/:id',
+                    element: <Payment />
+                }
             ]
         },
     ]);

@@ -9,12 +9,12 @@ interface IGig {
     cat: string;
     price: number;
     cover: string;
-    images: string[];
+    images?: any[];
     shortTitle: string;
     shortDesc: string;
     deliveryTime: number;
     revisionNumber: number;
-    features: number[];
+    features: any[];
     sales: number;
 }
 
@@ -41,7 +41,7 @@ const gigSchema = new Schema<IGig>({
     },
     cat: {
         type: String,
-        required: true,
+        required: false,
     },
     price: {
         type: Number,

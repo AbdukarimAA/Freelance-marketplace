@@ -5,6 +5,7 @@ import path from "path";
 import {fileURLToPath} from "url";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import helmet from "helmet";
 
 import userRoute from "./routes/user.route.js";
 import authRoute from "./routes/auth.route.js";
@@ -15,6 +16,15 @@ import reviewRoute from "./routes/review.route.js";
 import messageRoute from "./routes/message.route.js";
 
 const app = express();
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            "script-src": ["'self'", "example.com"],
+            "style-src": null,
+        },
+    })
+);
+
 const __filename: string = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config({ path: __dirname+'/.env' });

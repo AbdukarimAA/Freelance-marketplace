@@ -29,15 +29,15 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         const token = jwt.sign({
             id: user._id,
             isSeller: user.isSeller
-        }, process.env.JWT_KEY as string);
+        }, process.env.JWT_KEY as string, {expiresIn: "24d"});
 
         const {password, ...info} = user._doc;
 
         res.cookie("accessToken", token, {
-            maxAge: 12592000,
+            maxAge: 30 * 24 * 60 * 60 * 1000,
             httpOnly: true,
             secure: true,
-            // sameSite: "none"
+            sameSite: "none"
         }).status(200).send(info);
 
     } catch (error: any) {
